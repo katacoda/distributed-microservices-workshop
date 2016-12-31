@@ -1,2 +1,6 @@
 <h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<div>
+  {{#each catalogue}}
+    <div>{{this.name}} - {{this.tickets.length}} tickets left</div>
+  {{/each}}
+</div>
