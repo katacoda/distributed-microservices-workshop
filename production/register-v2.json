@@ -1,0 +1,7 @@
+{
+  "ID": "catalogue-v2",
+  "Name": "catalogue",
+  "Address": "127.0.0.1",
+  "Port": 4002,
+  "Tags": ["v1.0.2", "v1-0-2"]
+}
