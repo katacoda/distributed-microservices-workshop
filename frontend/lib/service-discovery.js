@@ -3,7 +3,7 @@ var request = require('./request');
 module.exports = function(name, version, cb) {
   var url = "http://localhost:8500/v1/health/service/";
 
-  request.get(url + name + "?tags=" + version, function(err, data) {
+  request.get(url + name + "?tag=" + version, function(err, data) {
     if(err) { return cb(err);}
     getFirstHealthService(data, cb);
   });
