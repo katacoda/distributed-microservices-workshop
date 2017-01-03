@@ -1,0 +1,57 @@
+# https://raw.githubusercontent.com/containous/traefik/master/traefik.sample.toml
+
+debug = true
+logLevel = "DEBUG"
+defaultEntryPoints = ["http"]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":8080"
+    defaultEntryPoints = ["http"]
+
+[web]
+  address = ":8081"
+
+# https://docs.traefik.io/toml/#consul-catalog-backend
+[consulCatalog]
+  endpoint = "127.0.0.1:8500"
+
+
+################################################################
+# Sample rules
+################################################################
+# [backends]
+#   [backends.backend1]
+#     [backends.backend1.circuitbreaker]
+#       expression = "NetworkErrorRatio() > 0.5"
+#     [backends.backend1.servers.server1]
+#     url = "http://172.17.0.2:80"
+#     weight = 10
+#     [backends.backend1.servers.server2]
+#     url = "http://172.17.0.3:80"
+#     weight = 1
+#   [backends.backend2]
+#     [backends.backend2.LoadBalancer]
+#       method = "drr"
+#     [backends.backend2.servers.server1]
+#     url = "http://172.17.0.4:80"
+#     weight = 1
+#     [backends.backend2.servers.server2]
+#     url = "http://172.17.0.5:80"
+#     weight = 2
+#
+# [frontends]
+#   [frontends.frontend1]
+#   backend = "backend2"
+#     [frontends.frontend1.routes.test_1]
+#     rule = "Host: test.localhost, other.localhost"
+#   [frontends.frontend2]
+#   backend = "backend1"
+#   passHostHeader = true
+#   entrypoints = ["https"] # overrides defaultEntryPoints
+#     [frontends.frontend2.routes.test_1]
+#     rule = "Host:{subdomain:[a-z]+}.localhost"
+#   [frontends.frontend3]
+#   entrypoints = ["http", "https"] # overrides defaultEntryPoints
+#   backend = "backend2"
+#     rule = "Path: /test, /other"

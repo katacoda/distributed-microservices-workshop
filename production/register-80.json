@@ -1,0 +1,6 @@
+{
+  "ID": "catalogue",
+  "Name": "catalogue",
+  "Address": "localhost",
+  "Port": 8080
+}

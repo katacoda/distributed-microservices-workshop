@@ -1,7 +1,10 @@
 {
-  "ID": "catalogue",
-  "Name": "catalogue",
+  "ID": "catalogue-srv-v1",
+  "Name": "catalogue-srv",
   "Address": "127.0.0.1",
   "Port": 4001,
-  "Tags": ["v1.0.1", "v1-0-1"]
+  "Tags": [
+    "traefik.backend.weight=10", 
+    "traefik.frontend.rule=Host:localhost, catalogue-srv.consul.localhost"
+  ]
 }
