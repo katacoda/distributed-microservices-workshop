@@ -3,6 +3,7 @@ var port = 4003;
 
 var requestHandler = function(req, res) {
   if(Math.random() > 0.5) {
+    console.log("Request successful");
     if(Math.random() > 0.3) {
       return res.end(JSON.stringify({success: true}));
     } else {
@@ -10,6 +11,7 @@ var requestHandler = function(req, res) {
       return res.end(JSON.stringify({success: false, message: "Already allocated"}));
     }
   } else {
+    console.log("Request failed");
     res.statusCode = 500;
     return res.end("Random Error");
   }
