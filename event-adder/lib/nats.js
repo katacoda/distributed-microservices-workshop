@@ -6,8 +6,10 @@ module.exports = function(data, cb) {
   try {
     var client = nats.connect({servers: servers});
     client.on('error', function(e) {
-      console.log('NATS Error', e);
-      return cb(e);
+      console.warn('NATS Error', e);
+      setTimeout(function() {
+        return cb(e);
+      }, 2000);
     });
 
     client.publish('ticket-allocate', data, function() {
@@ -15,8 +17,7 @@ module.exports = function(data, cb) {
       return cb();
     });
   } catch (e) {
-    console.log("Error", e);
+    console.warn("Error", e);
     return cb(e);
-  } 
+  }
 };
-
