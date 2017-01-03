@@ -1,0 +1,6 @@
+{
+  "ID": "ticket-allocator",
+  "Name": "ticket-allocator",
+  "Address": "127.0.0.1",
+  "Port": 4003
+}

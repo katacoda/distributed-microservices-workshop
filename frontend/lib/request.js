@@ -20,15 +20,24 @@ var get = function(url, cb) {
 };
 
 var post = function(url, data, cb) {
-  http.post(url, data, function(res) {
-    var body = '';
-    res.on("data", function(chunk) {
-      cb(null, chunk);
+  var callback = function(response) {
+    var status = response.statusCode;
+    var body = ''
+    response.on('data', function (chunk) {
+      body += chunk;
     });
-  }).on('error', function(e) {
-    cb(e);
-  });
 
+    response.on('end', function () {
+      if(status > 300)
+        cb({status: status, message: body});
+      else
+        cb(null, body);
+    });
+  }
+
+  var req = http.request(url, callback);
+  req.write(JSON.stringify(data));
+  req.end();
 };
 
 module.exports = {
