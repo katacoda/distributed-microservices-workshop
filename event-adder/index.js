@@ -3,6 +3,9 @@ var port = 4004;
 var eventStorage = require('./lib/nats');
 var circuitBreaker = require('./lib/circuit-breaker');
 
+var fs = require('fs');
+var jwt = require('jsonwebtoken');
+
 var breaker = new circuitBreaker({
   timeoutDuration: 1000,
   volumeThreshold: 1,
@@ -69,7 +72,26 @@ var saveEvent = function(data, res){
   breaker.run(command, fallback);
 };
 
+
+
+
 var requestHandler = function(req, res) {
+  var token = req.headers['authorization'];
+  if(token)
+    token = token.replace(/^Bearer /, '');
+
+  try {
+    var decoded = jwt.verify(token, cert);
+    console.log("Cert Token: ", token, decoded);
+    if(decoded.token !== "letmeaddevents") {
+      res.statusCode = 401;
+      return res.end("Invalid Token");
+    }
+  } catch (e) {
+    res.statusCode = 401;
+    return res.end("Invalid Token");
+  }
+
   if (req.method == 'POST') {
     console.log("[200] Request Received");
 
@@ -89,6 +111,7 @@ var requestHandler = function(req, res) {
 };
 
 var server = http.createServer(requestHandler);
+var cert = fs.readFileSync('public.pem');
 
 server.listen(port, function(err) {
   if (err) {
