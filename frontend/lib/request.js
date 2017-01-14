@@ -5,11 +5,12 @@ var fs = require('fs');
 var rest = require('rest');
 var restInterceptor = require('zipkin-instrumentation-cujojs-rest').restInterceptor;
 var tracer = require('./tracing');
+var correlator = require('correlation-id');
 
 var get = function(url, service, cb) {
   var client = rest.wrap(restInterceptor, {tracer:tracer, remoteServiceName: service});
 
-  client(url).then(success => {
+  client({path: url, headers: {'x-correlation': correlator.getId()}}).then(success => {
     cb(null, JSON.parse(success.entity));
   }).catch(function () {
      cb()
