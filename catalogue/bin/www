@@ -7,15 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('catalogue:server');
 var fs = require('fs');
-var https = require('https');
-
-var privateKey  = fs.readFileSync('certs/private-key.pem', 'utf8');
-var certificate = fs.readFileSync('certs/catalogue-cert.pem', 'utf8');
-var ca = fs.readFileSync('certs/root-ca.cert.pem');
-
-
-var credentials = {key: privateKey, cert: certificate, ca: ca, requestCert: true, rejectUnauthorized: true};
-
+var http = require('http');
 
 
 /**
@@ -29,7 +21,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = https.createServer(credentials, app);
+var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.

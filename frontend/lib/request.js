@@ -2,22 +2,17 @@ var http = require('http');
 var https = require('https');
 var fs = require('fs');
 
-var get = function(url, cb) {
-  http.get(url, function(res) {
-    var body = '';
-    res.on("data", function(chunk) {
-      body += chunk;
-    });
-    res.on("end", function() {
-      try {
-        var parsed = JSON.parse(body);
-        cb(null, parsed);
-      } catch (e) {
-        cb(e);
-      }
-    });
-  }).on('error', function(e) {
-    cb(e);
+var rest = require('rest');
+var restInterceptor = require('zipkin-instrumentation-cujojs-rest').restInterceptor;
+var tracer = require('./tracing');
+
+var get = function(url, service, cb) {
+  var client = rest.wrap(restInterceptor, {tracer:tracer, remoteServiceName: service});
+
+  client(url).then(success => {
+    cb(null, JSON.parse(success.entity));
+  }).catch(function () {
+     cb()
   });
 };
 
@@ -68,5 +63,5 @@ var post = function(url, data, cb) {
 
 module.exports = {
   get: get, post: post,
-  secureGet: secureGet
+  secureGet: get
 };
