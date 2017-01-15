@@ -14,6 +14,7 @@ var certificate = fs.readFileSync('certs/catalogue-cert.pem', 'utf8');
 var ca = fs.readFileSync('certs/root-ca.cert.pem');
 
 
+//QUESTION: What does requestCert and rejectUnauthorized do? What happens if they're false?
 var credentials = {key: privateKey, cert: certificate, ca: ca, requestCert: true, rejectUnauthorized: true};
 
 
