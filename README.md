@@ -26,24 +26,31 @@ Requires NodeJS, Docker, Java
 Current Repository:
 
 ```
-git clone git@github.com:katacoda/distributed-microservices-workshop.git
-cd distributed-microservices-workshop && git pull --all
+git clone https://github.com/katacoda/distributed-microservices-workshop.git
+cd distributed-microservices-workshop
+git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
+git fetch --all
+git pull --all
 ```
 
 Complete Demo Application:
 
 ```
-git clone git@github.com:katacoda/microservices-ticketing-demo.git
-cd microservices-ticketing-demo && git pull --all
+git clone https://github.com/katacoda/microservices-ticketing-demo.git
+cd microservices-ticketing-demo
+git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
+git fetch --all
+git pull --all
 ```
 
 ### Download Dependencies
-Download the dependencies for your OS
+Download the dependencies for your OS:
 
-`git clone git@github.com:katacoda/microservices-ticketing-dependencies-windows.git`
+Windows
+`git clone https://github.com/katacoda/microservices-ticketing-dependencies-windows.git`
 
+OSX
+`git clone https://github.com/katacoda/microservices-ticketing-dependencies-osx.git`
 
-`git clone git@github.com:katacoda/microservices-ticketing-dependencies-osx.git`
-
-
-`git clone git@github.com:katacoda/microservices-ticketing-dependencies-linux.git`
+Linux
+`git clone https://github.com/katacoda/microservices-ticketing-dependencies-linux.git`
