@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var metric = require('./../lib/metrics');
+var metric = require('./../lib/metrics-client');
 
 router.get('/metrics', function(req, res, next) {
   metric.hit(req, res);
