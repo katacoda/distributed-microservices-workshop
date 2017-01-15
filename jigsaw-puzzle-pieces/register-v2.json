@@ -5,6 +5,6 @@
   "Port": 4002,
   "Tags": [
     "traefik.backend.weight=5", 
-    "traefik.frontend.rule=Host:catalogue-srv.consul.localhost"
+    "traefik.frontend.rule=Host:localhost, catalogue-srv.consul.localhost"
   ]
 }
