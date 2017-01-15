@@ -17,30 +17,6 @@ var get = function(url, service, cb) {
   });
 };
 
-var secureGet = function(url, cb) {
-  url.key = fs.readFileSync('certs/private-key.pem');
-  url.cert = fs.readFileSync('certs/catalogue-cert.pem');
-  url.ca = fs.readFileSync('certs/root-ca.cert.pem');
-  url.hostname = url.host;
-
-  https.get(url, function(res) {
-    var body = '';
-    res.on("data", function(chunk) {
-      body += chunk;
-    });
-    res.on("end", function() {
-      try {
-        var parsed = JSON.parse(body);
-        cb(null, parsed);
-      } catch (e) {
-        cb(e);
-      }
-    });
-  }).on('error', function(e) {
-    cb(e);
-  });
-};
-
 var post = function(url, data, cb) {
   var callback = function(response) {
     var status = response.statusCode;

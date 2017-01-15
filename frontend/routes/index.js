@@ -5,16 +5,7 @@ var router = express.Router();
 var getCatalogue = require('./../lib/getCatalogue');
 var allocateTicket = require('./../lib/allocateTicket');
 
-var correlator = require('correlation-id');
-
-var log = function(req, res, next) {
-  console.log('[%s] [%s] Starting', new Date(), correlator.getId());
-
-  res.on('end', function() {
-    console.log('[%s] [%s] Completed', new Date(), correlator.getId());
-  });
-  next();
-}
+var log = require('./lib/log');
 
 router.get('/', log, function(req, res, next) {
   getCatalogue(function(err, catalogue) {
