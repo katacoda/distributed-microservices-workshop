@@ -1,17 +1,9 @@
-var discover = require('./service-discovery');
+var retry = require('retry');
 var request = require('./request');
 var debug = require('debug')('frontend:allocateTicket');
-var retry = require('retry');
-
-module.exports = function(data, cb) {
-  discover('ticket-allocator', function(err, service) {
-    if(err) { return cb(err); }
-
-    faultTolerantResolve(service, data, cb);
-  });
-};
 
 function faultTolerantResolve(service, data, cb) {
+  //QUESTION: What happens if you change these settings?
   var operation = retry.operation({
     retries: 5,
     factor: 3,
@@ -33,6 +25,7 @@ function faultTolerantResolve(service, data, cb) {
         return;
       }
 
+      //QUESTION: How does this work?
       cb(err ? operation.mainError() : null, data);
     });
   });
