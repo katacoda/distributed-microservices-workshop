@@ -7,36 +7,13 @@ var restInterceptor = require('zipkin-instrumentation-cujojs-rest').restIntercep
 var tracer = require('./tracing');
 
 var get = function(url, service, cb) {
+  //QUESTION: What does the wrapping do? How does it work?
   var client = rest.wrap(restInterceptor, {tracer:tracer, remoteServiceName: service});
 
   client(url).then(success => {
     cb(null, JSON.parse(success.entity));
   }).catch(function () {
      cb()
-  });
-};
-
-var secureGet = function(url, cb) {
-  url.key = fs.readFileSync('certs/private-key.pem');
-  url.cert = fs.readFileSync('certs/catalogue-cert.pem');
-  url.ca = fs.readFileSync('certs/root-ca.cert.pem');
-  url.hostname = url.host;
-
-  https.get(url, function(res) {
-    var body = '';
-    res.on("data", function(chunk) {
-      body += chunk;
-    });
-    res.on("end", function() {
-      try {
-        var parsed = JSON.parse(body);
-        cb(null, parsed);
-      } catch (e) {
-        cb(e);
-      }
-    });
-  }).on('error', function(e) {
-    cb(e);
   });
 };
 
@@ -62,6 +39,5 @@ var post = function(url, data, cb) {
 };
 
 module.exports = {
-  get: get, post: post,
-  secureGet: get
+  get: get, post: post
 };

@@ -5,6 +5,6 @@ module.exports = function(cb) {
   discover('catalogue', function(err, service) {
     if(err) { return cb(err); }
 
-    request.secureGet(service, 'catalogue', cb);
+    request.get(service, 'catalogue', cb);
   });
 };
