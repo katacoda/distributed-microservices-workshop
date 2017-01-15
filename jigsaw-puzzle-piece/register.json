@@ -2,5 +2,9 @@
   "ID": "catalogue",
   "Name": "catalogue",
   "Address": "127.0.0.1",
-  "Port": 4001
+  "Port": 4001,
+  "check": {
+    "script": "curl localhost:4001 > /dev/null 2>&1",
+    "interval": "10s"
+  }
 }
