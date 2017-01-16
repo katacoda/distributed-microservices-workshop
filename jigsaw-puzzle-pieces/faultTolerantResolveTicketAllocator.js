@@ -30,3 +30,5 @@ function faultTolerantResolve(service, data, cb) {
     });
   });
 }
+
+module.export = faultTolerantResolve;
