@@ -11,8 +11,8 @@ var requestHandler = function(req, res) {
     token = token.replace(/^Bearer /, '');
 
   try {
-    var decoded = jwt.verify(token, cert);
-    console.log("Cert Token: ", token, decoded);
+    var decoded = jwt.verify(token, 'mysupersecretpassword');
+    console.log("Token: ", token, decoded);
     if(decoded.token !== "letmeaddevents") {
       res.statusCode = 401;
       return res.end("Invalid Token");
@@ -41,7 +41,6 @@ var requestHandler = function(req, res) {
 };
 
 var server = http.createServer(requestHandler);
-var cert = fs.readFileSync('public.pem');
 
 server.listen(port, function(err) {
   if (err) {
