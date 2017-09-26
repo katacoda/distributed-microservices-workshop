@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
 router.post('/tickets', function(req, res, next) {
   var userId = 1; //TODO: Fix :)
   allocateTicket({ticket: req.body.ticket, user: userId}, function(err, resp) {
-    if(err) { return res.status(err.status).json(err.message); }
+    if(err) { return res.json(err.message); }
 
     res.json(resp);
   });
