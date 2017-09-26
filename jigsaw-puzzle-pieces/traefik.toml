@@ -12,7 +12,6 @@ defaultEntryPoints = ["http"]
 [web]
   address = ":8081"
 
-# https://docs.traefik.io/toml/#consul-catalog-backend
 [consulCatalog]
   endpoint = "127.0.0.1:8500"
 
