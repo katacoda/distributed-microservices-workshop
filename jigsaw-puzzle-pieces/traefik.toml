@@ -13,6 +13,7 @@ defaultEntryPoints = ["http"]
   address = ":8081"
 
 [consulCatalog]
+  watch = true
   endpoint = "127.0.0.1:8500"
 
 

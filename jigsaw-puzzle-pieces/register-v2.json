@@ -3,6 +3,10 @@
   "Name": "catalogue-srv",
   "Address": "127.0.0.1",
   "Port": 4002,
+  "check": {
+    "script": "curl localhost:4002 > /dev/null 2>&1",
+    "interval": "10s"
+  },
   "Tags": [
     "traefik.backend.weight=5", 
     "traefik.frontend.rule=Host:localhost, catalogue-srv.consul.localhost"
